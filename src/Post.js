@@ -30,9 +30,32 @@ class Header extends Component {
 }
 
 class Content extends Component {
+    constructor(props) {
+        super();
+        this.state = {
+            content: 'Check out this content property!'
+        }
+        this.changeContent = this.changeContent.bind(this)
+    }
+
+   changeContent(e) {
+        e.preventDefault();
+        let newContentValue = prompt("What should the new body be?");
+        if (newContentValue != null) {
+        this.setState((prevState, props) => {
+            return {
+                content: newContentValue
+            }
+        })
+        }
+    }
+
     render () {
         return(
-            <p>{this.props.content}</p>
+            <div>
+            <p id="content">{this.state.content}</p>
+            <button id="button" onClick={this.changeContent}>Edit Body</button>
+            </div>
         )
     }
 }
@@ -59,15 +82,16 @@ class Content extends Component {
             <div>
                 {comments}
             </div>
-        )
+        );
     }
   }
+
   
 function App() {
     return(
         <div>
             <Header header={elems.header} author={elems.author}/>
-            <Content content={elems.content} />
+            <Content content={this.state.content} onClick={this.changeContent} />
             <Commentpost />
         </div>
     ) 
